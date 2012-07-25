@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='SampleApp-view-speech-Basic'>/**
+</span> *
+ * User Interface for the Speech to Text Basic application.
+ *
+ */
+Ext.define('SampleApp.view.speech.Basic', {
+    extend: 'Ext.Container',
+    xtype: 'att-speech-basic',
+
+    requires: [
+        'Ext.form.Panel',
+        'Ext.form.FieldSet',
+        'SampleApp.view.Footer'
+    ],
+
+    config: {
+        title: 'Basic Speech',
+        scrollable: 'vertical',
+        defaults: {scrollable: false}
+    },
+
+    initialize: function() {
+        this.add([
+            this.buildForm(),
+            {xtype: 'att-footer'}
+        ]);
+    },
+   
+<span id='SampleApp-view-speech-Basic-method-buildForm'>    /**
+</span>     * Builds the UI components for Feature 1: Send Speech To Text.
+     */
+    buildForm: function(){
+        return {
+            xtype   : 'formpanel',
+            itemId  : 'feature1',
+            items   : [
+                {
+                    xtype    : 'fieldset',
+                    title    : 'Feature 1: Speech to Text',
+                    defaults : {
+                        labelWidth : '40%'
+                    },
+                    items : [
+                        {
+                            xtype : 'fieldset',
+                            title: 'Audio File',
+                            items : [
+                                 {
+                                     xtype: 'selectfield',
+                                     label: 'Choose File',
+                                     name : 'file',
+                                     options: [
+                                         {text: 'Bananas.wav',  value: 'Bananas.wav'},
+                                         {text: 'Bananas.amr', value: 'Bananas.amr'},
+                                         {text: 'Starbucks.wav',  value: 'Starbucks.wav'},
+                                         {text: 'Starbucks.amr', value: 'Starbucks.amr'}
+                                     ]
+                                 } 
+                            ] 
+                        },   
+                        {
+                            xtype    : 'button',
+                            ui       : 'action',
+                            action   : 'sendspeech',
+                            text     : 'Submit'
+                        }
+                    ]
+                },{
+                    xtype: 'container',
+                    html: '&lt;strong&gt;Speech file format constraints:&lt;/strong&gt;&lt;ul&gt;&lt;li&gt;16 bit PCM WAV, single channel, 8 kHz sampling&lt;/li&gt;&lt;li&gt;AMR (narrowband), 12.2 kbits/s, 8 kHz sampling&lt;/li&gt;&lt;/ul&gt;',
+                    styleHtmlContent: true
+                }
+            ]
+        };    
+    }
+    
+});</pre>
+</body>
+</html>

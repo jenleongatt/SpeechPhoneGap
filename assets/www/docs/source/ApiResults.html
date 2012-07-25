@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='SampleApp-view-ApiResults'>/**
+</span> * A Sheet to display API call results
+ */
+Ext.define('SampleApp.view.ApiResults', {
+    extend: 'Ext.ActionSheet',
+    xtype: 'apiresults',
+    
+    //override
+    initialize: function() {
+        this.resultPanel = Ext.create('Ext.Container',{
+            tpl:  '&lt;div class=&quot;header &lt;tpl if=&quot;success == true&quot;&gt;success&lt;tpl else&gt;failed&lt;/tpl&gt;&quot;&gt;Success: {success}&lt;/div&gt;&lt;div&gt;Server Response:&lt;br/&gt;&lt;span&gt;{results}&lt;span&gt;&lt;/div&gt;',
+            styleHtmlContent: true,
+            style: 'background: #fff',
+            scrollable: 'both',
+            height: 150
+        });
+        this.add([this.resultPanel,{
+            xtype: 'toolbar',
+            docked: 'top',
+            title: 'Response',
+            items:[{xtype: 'spacer'},{
+                text: 'Done',
+                action: 'close'
+            }]
+        }]);
+    },
+    
+<span id='SampleApp-view-ApiResults-method-setData'>    /**
+</span>     * This will update the tpl used to display the response from API calls.
+     * The data Object is a simple object that wraps the success and results parameters.
+     * data.success represents whether or not the call was successful and the data.results is a String representation of the JSON object returned from API call.
+     * @param data {Object}
+     */
+    setData: function(data) {
+        var result = JSON.parse(data.results),
+            //this should be changed from server side to make consistent responses
+            success = (!data.success || !result
+                    || result.error 
+                    || result.IsSuccess == &quot;false&quot; 
+                    || result.requestError
+                    || result.RequestError
+                    || result.apiError) ? false : true;
+        
+        this.resultPanel.setData({
+            success: success,
+            results: JSON.stringify(result, null, '    ')    
+        });
+        
+        this.resultPanel.getScrollable().getScroller().scrollTo(0,0);
+    }
+
+});</pre>
+</body>
+</html>
